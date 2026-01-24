@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{%import "_macros.html" as macros%}
+
+<form method="post" action="">
+        {{ macros.datos('nombre', 'Escribe tu nombre')}}
+        {{ macros.datos('edad', 'Escribe tu edad, nombre')}}
+        {{ macros.datos('email', 'Escribe tu correo, email')}}
+        {{ macros.datos('password', 'Escribe tu contraseña, password')}}
+</form>
+
+
+<form method="post" action="/operasBas">
+
+
+{% endblock %}

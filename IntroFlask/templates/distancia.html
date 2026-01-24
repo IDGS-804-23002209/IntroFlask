@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% import "_macros.html" as macros %}
+
+{% block content %}
+<h2>Distancia entre dos puntos</h2>
+
+<form method="POST">
+    {{ macros.campo("x1", "X1") }}
+    {{ macros.campo("y1", "Y1") }}
+    {{ macros.campo("x2", "X2") }}
+    {{ macros.campo("y2", "Y2") }}
+
+    <button type="submit">Calcular</button>
+</form>
+
+{% if resultado is not none %}
+<div class="resultado">
+    <strong>Distancia:</strong> {{ resultado }}
+</div>
+{% endif %}
+
+{% endblock %}
