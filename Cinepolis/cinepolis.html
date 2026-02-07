@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% from "macros.html" import render_field %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header">Cinepolis</div>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div style="display: flex; justify-content: space-between;">
+            <div class="section-box" style="width: 60%;">
+                <legend>Entradas</legend>
+                {{ render_field(form.nombre) }}
+                {{ render_field(form.compradores) }}
+                {{ render_field(form.tarjeta) }}
+                {{ render_field(form.boletas) }}
+            </div>
+
+            <div class="section-box" style="width: 30%;">
+                <legend>Salidas</legend>
+                <label>Valor a Pagar</label>
+                <input type="text" value="{{ total if total else '' }}" readonly style="width: 80%;">
+            </div>
+        </div>
+
+        <div class="title-cine">Cinépolis</div>
+        <div class="footer-text">LA CAPITAL DEL CINE</div>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div class="section-box actions">
+            <legend>Acciones</legend>
+            <button type="submit" class="btn">Procesar</button>
+            <button type="reset" class="btn">Salir</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

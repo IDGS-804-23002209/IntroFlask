@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cinepolis - Capital del Cine</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            width: 700px;
+            margin: 20px auto;
+            background-color: #3b5998;
+            border: 2px solid white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            border: 1px solid white;
+            width: 150px;
+            margin: 0 auto;
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .section-box {
+            border: 1px solid white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .title-cine {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-style: italic;
+            font-size: 14px;
+            margin-top: -10px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: #ccc;
+            border: 1px solid #000;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+</html>

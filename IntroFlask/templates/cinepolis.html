@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% from "_macros.html" import render_field %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #ffffff;
+        font-family: Tahoma, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .app-window {
+        width: 900px;
+        margin: 40px auto;
+        background: linear-gradient(rgba(31, 60, 136, 0.85), rgba(31, 60, 136, 0.85)),
+        url("{{ url_for('static', filename='bootstrap/img/fondo.png') }}");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: white;
+        padding: 20px;
+        border: 3px solid #102a5e;
+        box-shadow: 0 0 2px #ffffff;
+    }
+
+    h2 { margin-bottom: 25px; }
+    .panels { display: flex; gap: 40px; }
+    fieldset { border: 1px solid #cfd8ff; padding: 20px; width: 100%; }
+    legend { padding: 0 10px; font-style: italic; font-size: 1.1rem; color: white; }
+    label { display: block; margin-top: 10px; font-size: 0.9rem; }
+
+    .form-control {
+        width: 90%;
+        height: 26px;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        color: black;
+    }
+
+    /* Estilo para los mensajes de error de Flask debajo de los campos */
+    .error-msg {
+        color: #ff9d9d; /* Un rojo claro que resalta sobre el azul */
+        font-size: 0.8rem;
+        font-weight: bold;
+        display: block;
+        margin-top: 4px;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .output {
+        background: white;
+        color: black;
+        width: 160px;
+        padding: 5px;
+        font-weight: bold;
+        border: 1px solid black;
+        margin-top: 5px;
+    }
+
+    .actions { margin-top: 25px; text-align: center; }
+
+    .radio-group ul {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+        display: flex;
+        gap: 20px;
+    }
+
+    .radio-group li { display: flex; align-items: center; gap: 5px; }
+    .radio-group input[type="radio"] { margin: 0; width: auto; height: auto; cursor: pointer; }
+    .radio-group label { display: inline; margin: 0; cursor: pointer; }
+
+    .btn-custom {
+        background-color: #dcdcdc;
+        color: black;
+        border: 1px solid black;
+        padding: 6px 25px;
+        margin: 0 10px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-custom:hover { background-color: #f1f1f1; }
+</style>
+
+<div class="app-window">
+    <h2>Cinépolis: La Capital del Cine</h2>
+
+    <form method="POST" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="panels">
+            <fieldset>
+                <legend>Entradas</legend>
+
+                {{ render_field(form.nombre, class="form-control") }}
+                {% for err in form.nombre.errors %}
+                    <span class="error-msg">{{ err }}</span>
+                {% endfor %}
+
+                {{ render_field(form.compradores, class="form-control") }}
+                {% for err in form.compradores.errors %}
+                    <span class="error-msg">{{ err }}</span>
+                {% endfor %}
+
+                <label>Tarjeta Cineco</label>
+                <div class="radio-group">
+                    {{ form.tarjeta }}
+                </div>
+                {% for err in form.tarjeta.errors %}
+                    <span class="error-msg">{{ err }}</span>
+                {% endfor %}
+
+                {{ render_field(form.boletas, class="form-control") }}
+                {% for err in form.boletas.errors %}
+                    <span class="error-msg">{{ err }}</span>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset>
+                <legend>Salidas</legend>
+                <label>Valor a Pagar</label>
+                <div class="output">
+                    $ {{ "{:,.2f}".format(total) if total else '0.00' }}
+                </div>
+            </fieldset>
+        </div>
+
+        <fieldset class="actions">
+            <legend>Acciones</legend>
+            <button type="submit" class="btn-custom">Procesar</button>
+            <a href="/" class="btn-custom">Salir</a>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

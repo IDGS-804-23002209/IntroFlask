@@ -3,13 +3,15 @@ import math
 import forms
 from flask_wtf.csrf import CSRFProtect
 
+from forms import CinepolisForm
+
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'
 csrf = CSRFProtect()
 
 
 
-@app.route('/index')
+@app.route('/')
 def index():
     title = "IDGS804 - Intro Flask"
     listado = ['Jimena', 'Uriel', 'Paola', 'Gabriela']
@@ -124,6 +126,34 @@ def alumnos():
         ape = alumno_clas.apellido.data
         email = alumno_clas.correo.data
     return render_template("alumnos.html", form=alumno_clas, mat = mat, nom = nom, ape = ape, email = email)
+
+@app.route('/cinepolis', methods=['GET', 'POST'])
+def cinepolis():
+    form = CinepolisForm()
+    total = 0.0
+    error = None
+    PRECIO_BOLETA = 12000
+
+    if request.method == 'POST':
+        if form.validate(): 
+            n_boletas = form.boletas.data
+            subtotal = n_boletas * PRECIO_BOLETA
+            
+            if n_boletas > 5:
+                subtotal *= 0.85
+            elif 3 <= n_boletas <= 5:
+                subtotal *= 0.90
+            
+            if form.tarjeta.data == 'S':
+                subtotal *= 0.90
+                
+            total = round(subtotal, 2)
+        else:
+            if form.errors:
+                field_errors = list(form.errors.values())[0]
+                error = field_errors[0]
+
+    return render_template('cinepolis.html', form=form, total=total, error=error)
 
 if __name__ == '__main__':
     csrf.init_app(app)

@@ -1,45 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
+<style>
+    /* Estilos para igualar la imagen del caso */
+    .cine-container {
+        background-color: #3b5998;
+        /* Azul Cinepolis */
+        border: 2px solid #fff;
+        padding: 25px;
+        color: white;
+        border-radius: 5px;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <title> Document</title>
-</head>
+    .header-cine {
+        background-color: white;
+        color: black;
+        width: fit-content;
+        padding: 2px 15px;
+        margin: 0 auto 20px auto;
+        font-weight: bold;
+    }
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="">IDGS-801</a>
+    .section-border {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 15px;
+        margin-bottom: 20px;
+    }
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    .brand-title {
+        font-size: 3rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 0;
+    }
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+    .brand-subtitle {
+        text-align: center;
+        letter-spacing: 5px;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
 
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="">Inicio</a>
-                    </li>
+    .btn-cine {
+        background-color: #e0e0e0;
+        color: black;
+        border: 1px solid #000;
+        margin: 0 5px;
+    }
+</style>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'usuarios' %}active{% endif %}"
-                            href="">Usuarios</a>
-                    </li>
+<body class="bg-light">
+    <div class="container mt-3">
+        <div class="cine-container">
+            <div class="header-cine">Cinepolis</div> [cite: 8]
 
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'alumnos' %}active{% endif %}" href="">Alumnos</a>
-                    </li>
-                </ul>
-            </div>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="section-border">
+                            <small>Entradas</small> [cite: 3]
+                            <div class="mb-2">
+                                <label class="form-label">{{ form.nombre.label }}</label> [cite: 4]
+                                {{ form.nombre(class="form-control form-control-sm") }}
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">{{ form.compradores.label }}</label> [cite: 5]
+                                {{ form.compradores(class="form-control form-control-sm") }}
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">{{ form.tarjeta.label }}</label> [cite: 6]
+                                <div class="d-flex gap-3">
+                                    {% for subfield in form.tarjeta %}
+                                    <div>{{ subfield }} {{ subfield.label }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">{{ form.boletas.label }}</label> [cite: 7]
+                                {{ form.boletas(class="form-control form-control-sm") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="section-border h-100">
+                            <small>Salidas</small> [cite: 9]
+                            <div class="mt-4">
+                                <label>{{ form.nombre.data if form.nombre.data else 'Cliente' }} - Valor a Pagar</label>
+                                [cite: 10]
+                                <input type="text" class="form-control bg-white" value="${{ total }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="brand-title">Cinépolis</div> [cite: 13]
+                <div class="brand-subtitle">LA CAPITAL DEL CINE</div> [cite: 14]
+
+                {% if error %}
+                <div class="alert alert-danger py-1">{{ error }}</div>
+                {% endif %}
+
+                <div class="section-border text-center">
+                    <small class="d-block text-start">Acciones</small> [cite: 15]
+                    <button type="submit" class="btn btn-cine btn-sm px-4">Procesar</button> [cite: 16]
+                    <button type="reset" class="btn btn-cine btn-sm px-4">Salir</button> [cite: 17]
+                </div>
+            </form>
         </div>
-    </nav>
-    <div class="container mt-5 pt-5">
-        {% block content %}
-        {% endblock %}
     </div>
-    <script src="../static/bootstrap/css/bootstrap.bundle.mind.js"></script>
 </body>
-</html>
+{% endblock %}
